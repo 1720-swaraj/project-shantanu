@@ -17,9 +17,12 @@ pipeline{
 		}
 		stage('stage-2'){
 			steps{
-				sh 'echo "this is our $WORKSPACE"'
+				dir('/var/lib/jenkins/workspace/jenkins-pipeline/'){
+					sh 'echo "this is our $WORKSPACE"'
 				sh 'echo "maven clean install"'
-				sh '/var/lib/jenkins/workspace/jenkins-pipeline/mvn clean install'
+				sh 'mvn clean install'
+				}
+				
 			}
 			
 		}
