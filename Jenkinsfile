@@ -10,7 +10,7 @@ pipeline{
 				sh 'echo "this is our $WORKSPACE"'
 				cleanWs()
 				sh 'echo "clonning git project"'
-				sh 'git clone https://github.com/1720-swaraj/project-shantanu.git'
+				sh 'git clone url:https://github.com/1720-swaraj/project-shantanu.git'
 			}
 			}
 			
