@@ -18,7 +18,6 @@ pipeline{
 		stage('stage-2'){
 			steps{
 				sh 'echo "this is our $WORKSPACE"'
-				cleanWs()
 				sh 'echo "maven clean install"'
 				sh 'sudo /var/lib/jenkins/workspace/mvn clean install'
 			}
