@@ -19,7 +19,7 @@ pipeline{
 			steps{
 				sh 'echo "this is our $WORKSPACE"'
 				sh 'echo "maven clean install"'
-				sh 'sudo /var/lib/jenkins/workspace/mvn clean install'
+				sh 'sudo /var/lib/jenkins/workspace/jenkins-pipeline/mvn clean install'
 			}
 			
 		}
