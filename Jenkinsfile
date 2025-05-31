@@ -23,6 +23,8 @@ pipeline{
 				dir('/var/lib/jenkins/workspace/jenkins-pipeline/'){
 					sh 'echo "this is our $WORKSPACE"'
 				sh 'echo "maven clean install"'
+				sh 'chmod -R 777 /var'
+				sh 'rm -rf target'
 				sh 'mvn clean install'
 				}
 				
