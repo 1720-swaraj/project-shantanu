@@ -6,7 +6,7 @@ pipeline{
 	stages{
 		stage('stage-1'){
 			steps{
-				dir('/mnt/new'){
+				dir('/mnt/'){
 				sh 'echo "this is our $WORKSPACE"'
 				cleanWs()
 				sh 'echo "clonning git project"'
