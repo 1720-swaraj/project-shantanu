@@ -2,6 +2,9 @@ pipeline{
 	agent{
 		label 'built-in'
 	}
+	tools{
+		maven 'apache-maven-3.9.9'
+	}
 
 	stages{
 		stage('stage-1'){
