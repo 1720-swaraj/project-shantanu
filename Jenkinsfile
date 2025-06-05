@@ -9,12 +9,13 @@ pipeline{
         stage('stage-1'){
             steps{
                 cleanWs()
-                sh 'echo "project clonning"'
+                sh 'echo "project clonning $WORKSPACE"'
                 git url: 'https://github.com/1720-swaraj/project-shantanu.git', branch: 'master'
             }
         }
+        }
     }
-}
+
 
 /*
 install java
