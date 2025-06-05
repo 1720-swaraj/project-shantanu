@@ -54,7 +54,6 @@ pipeline {
                         sh 'pwd'
                         sh 'mv /mnt/server/apache-tomcat-10.1.41/target/*.war /mnt/server/apache-tomcat-10.1.41/webapps/'
                         sh 'rm -rf /mnt/server/apache-tomcat-10.1.41/target'
-                        sh 'chmod +x /mnt/server/apache-tomcat-10.1.41/bin/startup.sh'
                         sh '/mnt/server/apache-tomcat-10.1.41/bin/startup.sh'
                     }
                 }
