@@ -15,7 +15,13 @@ pipeline {
         }
         stage('stage-2-maven-build') {
             steps {
-                sh '[ -d target ] && rm -rf target'
+                script{
+                    if([ -d target ]){
+                        sh 'rm -rf target'
+                    }else{
+                         echo "'target' folder does not exist — skipping deletion."
+                    }
+                }
                 sh 'mvn clean install'
                 sh 'cd target'
                 sh 'pwd'
