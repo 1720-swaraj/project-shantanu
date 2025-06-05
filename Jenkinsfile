@@ -47,6 +47,11 @@ pipeline {
                 dir('/mnt/server/apache-tomcat-10.1.41') {
                     
                     script {
+                         if(fileExists('*.war')){
+                            sh 'rm -rf *.war'
+                         }else{
+                            echo ".war is not existed"
+                         }
                          unstash "warFile"
                          sh 'ls -lrta *.war'
                          sh 'mv *.war webapps'
