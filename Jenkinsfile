@@ -1,21 +1,26 @@
-pipeline{
-    agent{
+pipeline {
+    agent {
         label 'built-in'
     }
-    tools{
+    tools {
         maven 'install-maven'
     }
-    stages{
-        stage('stage-1'){
-            steps{
+    stages {
+        stage('stage-1-git-clone') {
+            steps {
                 cleanWs()
                 sh 'echo "project clonning $WORKSPACE"'
                 git url: 'https://github.com/1720-swaraj/project-shantanu.git', branch: 'master'
             }
         }
+        stage('stage-2-maven-build'){
+            sh '[ -d target ] && rm -rf target'
+            sh 'mvn clean install'
+            sh 'cd target'
+            sh 'pwd'
         }
     }
-
+}
 
 /*
 install java
@@ -33,4 +38,3 @@ inside workspace where pom.xml is present mvn clean install
 checkout scm
 stash 'source-code' format '*.war'
 */
-
