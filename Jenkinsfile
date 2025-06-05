@@ -23,12 +23,11 @@ pipeline {
                     }
                 }
                 sh '''
-
                 mvn clean install
                 cd target
-                pwd
-
+                ls -lrta
                 '''
+
             }
         }
     }
