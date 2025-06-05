@@ -21,13 +21,38 @@ pipeline {
                     }else {
                         echo "'target' folder does not exist — skipping deletion."
                     }
+
+                    def warFiles = findFiles(glob: 'target/**/*.war')
+
+                    if(warFiles.length == 0){
+                        echo ".war file is not present"
+                    }
+
+                    def warFilePath = warFiles[0].path
+
+                    stash name: "warFile" includes: "warFilePath"
                 }
                 sh '''
                 mvn clean install
                 cd target
                 ls -lrta
                 '''
-
+            }
+        }
+        stage('stage-3-deploying-on-slave') {
+            agent {
+                label 'slave'
+            }
+            steps {
+                dir('/mnt/server/apache-tomcat-10.1.41') {
+                    
+                    script {
+                         unstash "warFile"
+                         sh 'ls -lrta *.war'
+                         sh 'mv *.war webapps'
+                         sh '/bin/startup.sh'
+                    }
+                }
             }
         }
     }
