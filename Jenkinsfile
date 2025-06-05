@@ -56,7 +56,9 @@ pipeline {
                          sh 'pwd'
                          sh 'mv /mnt/server/apache-tomcat-10.1.41/target/*.war /mnt/server/apache-tomcat-10.1.41/webapps/'
                          sh 'rm -rf /mnt/server/apache-tomcat-10.1.41/target'
+                         sh 'curl -I http://localhost:8080 || echo "Tomcat may not be running."'
                          sh '/mnt/server/apache-tomcat-10.1.41/bin/startup.sh'
+                         sh 'curl -I http://localhost:8080 || echo "Tomcat is running."'
                     }
                 }
             }
