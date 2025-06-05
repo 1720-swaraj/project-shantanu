@@ -1,31 +1,35 @@
-pipeline {
-    agent {
+pipeline{
+    agent{
         label 'built-in'
     }
-    tools {
-        maven 'apache-maven-3.9.9'
+    tools{
+        maven 'install-maven'
     }
-
-    stages {
-        stage('stage-1') {
-            steps {
-                dir('/mnt/new') {
-                    sh 'echo "this is our $WORKSPACE"'
-                    cleanWs()
-                    sh 'echo "clonning git project"'
-                    sh 'git clone https://github.com/1720-swaraj/project-shantanu.git'
-                }
+    stages{
+        stage('stage-1'){
+            steps{
+                cleanWs()
+                sh 'echo "project clonning"'
+                git url: 'https://github.com/1720-swaraj/project-shantanu.git', branch: 'master'
             }
         }
-        stage('stage-2') {
-            steps {
-                dir('$WORKSPACE') {
-                    sh 'echo "this is our $WORKSPACE"'
-                    sh 'echo "maven clean install"'
-                    sh 'rm -rf target'
-                    sh 'mvn clean install'
-                }
-            }
-			}
     }
 }
+
+/*
+install java
+install jenkins
+inside /var/lib/ systemctl start jenkins & systemctl enable jenkins
+login to jenkins
+install git
+install maven
+inside /root/.bash_profile MAVEN_HOME
+source .bash_profile
+git clone repository
+give jenkins file permission /mnt, $WORKSPACE
+cd target && rm -rf target
+inside workspace where pom.xml is present mvn clean install
+checkout scm
+stash 'source-code' format '*.war'
+*/
+
