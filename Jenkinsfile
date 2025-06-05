@@ -30,7 +30,7 @@ pipeline {
 
                     def warFilePath = warFiles[0].path
 
-                    stash name: "warFile" includes: "warFilePath"
+                    stash name: "warFile", includes: warFilePath
                 }
                 sh '''
                 mvn clean install
