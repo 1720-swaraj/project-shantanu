@@ -22,6 +22,9 @@ pipeline {
                         echo "'target' folder does not exist — skipping deletion."
                     }
 
+                    sh 'mvn clean install'
+                    sh 'ls -lrta'
+
                     def warFiles = findFiles(glob: 'target/**/*.war')
 
                     if(warFiles.length == 0){
@@ -32,11 +35,7 @@ pipeline {
 
                     stash name: "warFile", includes: warFilePath
                 }
-                sh '''
-                mvn clean install
-                cd target
-                ls -lrta
-                '''
+                
             }
         }
         stage('stage-3-deploying-on-slave') {
