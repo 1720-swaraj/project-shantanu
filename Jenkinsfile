@@ -16,7 +16,7 @@ pipeline {
         stage('stage-2-maven-build') {
             steps {
                 script{
-                    if([ -d target ]){
+                    if(fileExists('target')){
                         sh 'rm -rf target'
                     }else{
                          echo "'target' folder does not exist — skipping deletion."
