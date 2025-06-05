@@ -19,21 +19,22 @@ pipeline {
                     if (fileExists('target')) {
                         sh 'rm -rf target'
                     }else {
-                        echo "'target' folder does not exist — skipping deletion."
+                        echo "'target' folder does not exist ��� skipping deletion."
                     }
 
                     sh 'mvn clean install'
                     sh 'ls -lrta'
 
                     def warFiles = findFiles(glob: 'target/**/*.war')
-
+                    echo "{$warFiles}"    
                     if(warFiles.length == 0){
                         echo ".war file is not present"
                     }
 
                     def warFilePath = warFiles[0].path
-
-                    stash name: "warFile", includes: warFilePath
+                    echo " hii {$warFilePath}" 
+                    
+                    stash name: "warFile", includes: "${warFilePath}"
                 }
                 
             }
@@ -46,15 +47,15 @@ pipeline {
                 dir('/mnt/server/apache-tomcat-10.1.41') {
                     
                     script {
-                         if(fileExists('*.war')){
-                            sh 'rm -rf *.war'
+                         if(fileExists('/mnt/server/apache-tomcat-10.1.41/target')){
+                            sh 'rm -rf /mnt/server/apache-tomcat-10.1.41/target'
                          }else{
-                            echo ".war is not existed"
+                            echo "target is not existed"
                          }
                          unstash "warFile"
-                         sh 'ls -lrta *.war'
-                         sh 'mv *.war webapps'
-                         sh '/bin/startup.sh'
+                         sh 'pwd'
+                         sh 'mv /mnt/server/apache-tomcat-10.1.41/target/*.war /mnt/server/apache-tomcat-10.1.41/webapps/'
+                         sh '/mnt/server/apache-tomcat-10.1.41/bin/startup.sh'
                     }
                 }
             }
