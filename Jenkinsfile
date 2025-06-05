@@ -26,17 +26,16 @@ pipeline {
                     sh 'ls -lrta'
 
                     def warFiles = findFiles(glob: 'target/**/*.war')
-                    echo "{$warFiles}"    
-                    if(warFiles.length == 0){
-                        echo ".war file is not present"
+                    echo "{$warFiles}"
+                    if (warFiles.length == 0) {
+                        echo '.war file is not present'
                     }
 
                     def warFilePath = warFiles[0].path
-                    echo " hii {$warFilePath}" 
-                    
-                    stash name: "warFile", includes: "${warFilePath}"
+                    echo " hii {$warFilePath}"
+
+                    stash name: 'warFile', includes: "${warFilePath}"
                 }
-                
             }
         }
         stage('stage-3-deploying-on-slave') {
@@ -45,20 +44,17 @@ pipeline {
             }
             steps {
                 dir('/mnt/server/apache-tomcat-10.1.41') {
-                    
                     script {
-                         if(fileExists('/mnt/server/apache-tomcat-10.1.41/target')){
+                        if (fileExists('/mnt/server/apache-tomcat-10.1.41/target')) {
                             sh 'rm -rf /mnt/server/apache-tomcat-10.1.41/target'
-                         }else{
-                            echo "target is not existed"
-                         }
-                         unstash "warFile"
-                         sh 'pwd'
-                         sh 'mv /mnt/server/apache-tomcat-10.1.41/target/*.war /mnt/server/apache-tomcat-10.1.41/webapps/'
-                         sh 'rm -rf /mnt/server/apache-tomcat-10.1.41/target'
-                         sh 'curl -I http://localhost:8080 || echo "Tomcat may not be running."'
-                         sh '/mnt/server/apache-tomcat-10.1.41/bin/startup.sh'
-                         sh 'curl -I http://localhost:8080 || echo "Tomcat is running."'
+                         }else {
+                            echo 'target is not existed'
+                        }
+                        unstash 'warFile'
+                        sh 'pwd'
+                        sh 'mv /mnt/server/apache-tomcat-10.1.41/target/*.war /mnt/server/apache-tomcat-10.1.41/webapps/'
+                        sh 'rm -rf /mnt/server/apache-tomcat-10.1.41/target'
+                        sh '/mnt/server/apache-tomcat-10.1.41/bin/startup.sh'
                     }
                 }
             }
