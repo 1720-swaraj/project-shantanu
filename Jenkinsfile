@@ -13,11 +13,13 @@ pipeline {
                 git url: 'https://github.com/1720-swaraj/project-shantanu.git', branch: 'master'
             }
         }
-        stage('stage-2-maven-build'){
-            sh '[ -d target ] && rm -rf target'
-            sh 'mvn clean install'
-            sh 'cd target'
-            sh 'pwd'
+        stage('stage-2-maven-build') {
+            steps {
+                sh '[ -d target ] && rm -rf target'
+                sh 'mvn clean install'
+                sh 'cd target'
+                sh 'pwd'
+            }
         }
     }
 }
